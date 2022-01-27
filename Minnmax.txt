@@ -1,40 +1,31 @@
-MAX, MIN = 1000, -1000
-
-
-def minimax(depth, nodeIndex, maximizingPlayer,
-            values, alpha, beta):
-
-    if depth == 3:
-        return values[nodeIndex]
-
-    if maximizingPlayer:
-        best = MIN
-        for i in range(0, 2):
-
-            val = minimax(depth + 1, nodeIndex * 2 + i,
-                          False, values, alpha, beta)
-            best = max(best, val)
-            alpha = max(alpha, best)
-
-            if beta <= alpha:
-                break
-
-        return best
-
-    else:
-        best = MAX
-        for i in range(0, 2):
-
-            val = minimax(depth + 1, nodeIndex * 2 + i,
-                          True, values, alpha, beta)
-            best = min(best, val)
-            beta = min(beta, best)
-
-            if beta <= alpha:
-                break
-
-        return best
-
-
-values = [3, 5, 6, 9, 1, 2, 0, -1]
-print("The optimal value is :", minimax(0, 0, True, values, MIN, MAX))
+# Online Python compiler (interpreter) to run Python online.
+# Write Python 3 code in this online editor and run it.
+import math
+import random 
+#minimax class
+def minimax (currentDepth, nodeIndex, maxTurn, score, tarDepth): 
+  
+    # base case : tarDepth reached 
+    if (currentDepth == tarDepth):  
+        return score[nodeIndex] 
+      
+    if (maxTurn): 
+        return max(minimax(currentDepth + 1, nodeIndex * 2,  
+                    False, score, tarDepth),  
+                   minimax(currentDepth + 1, nodeIndex * 2 + 1,  
+                    False, score, tarDepth)) 
+      
+    else: 
+        return min(minimax(currentDepth + 1, nodeIndex * 2,  
+                     True, score, tarDepth),  
+                   minimax(currentDepth + 1, nodeIndex * 2 + 1,  
+                     True, score, tarDepth)) 
+      
+# Driver code 
+score = random.sample(range(1, 50),4)
+print(str(score))  
+treeDepth = math.log(len(score),2) 
+print(treeDepth)
+  
+print("The optimal value is : ", end = "") 
+print(minimax(0, 0, True, score, treeDepth))
